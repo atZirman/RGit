@@ -11,8 +11,12 @@ module RGit
     # Hashes the content, saves it compressed, and return the hash
     # Same content means same hash, so storing it twice just overwrites
     # an identical file
+    def self.hash_content(content)
+      Digest::SHA1.hexdigest(content)
+    end
+
     def self.write(content)
-      sha = Digest::SHA1.hexdigest(content)
+      sha = hash_content(content)
       
       directory = File.join(OBJECT_DIRECTORY, sha[0..1])
       FileUtils.mkdir_p(directory)
